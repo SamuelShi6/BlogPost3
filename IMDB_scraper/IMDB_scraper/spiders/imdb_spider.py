@@ -6,7 +6,7 @@ import scrapy
 class ImdbSpider(scrapy.Spider):
     name = 'imdb_spider'
 
-    start_urls = ['https://www.imdb.com/title/tt0330373/']
+    start_urls = ['https://www.imdb.com/title/tt0106145/']
 
     def parse(self, response):
         navigation_link = response.url + 'fullcredits/'
