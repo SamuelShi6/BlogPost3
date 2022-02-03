@@ -19,7 +19,7 @@ class ImdbSpider(scrapy.Spider):
 
     def parse_actor_page(self, response):
         rough_film_list = response.css("div.filmo-row").css("a::text").getall()
-        exact_list = [ i for i in rough_film_list if i[0:7] != 'Episode' and i[0:8] != 'Show all']
+        exact_list = [ i for i in rough_film_list if i[0:7] != 'Episode' and i[0:8] != 'Show all' and i != 'completed' and i != 'post-production' and i != 'pre-production' and i != 'filming']
         actor_name = response.css("span.itemprop::text").get()
         
         for film in exact_list:
