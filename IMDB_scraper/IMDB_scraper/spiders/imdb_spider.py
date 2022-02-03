@@ -18,10 +18,13 @@ class ImdbSpider(scrapy.Spider):
             yield scrapy.Request('https://www.imdb.com'+actor, callback = self.parse_actor_page)
 
     def parse_actor_page(self, response):
-        rough_film_list = response.css("div.filmo-row").css("a::text").getall()
-        exact_list = [ i for i in rough_film_list if i[0:7] != 'Episode' and i[0:8] != 'Show all' and i != 'completed' and i != 'post-production' and i != 'pre-production' and i != 'filming']
+        #rough_film_list = response.css("div.filmo-row").css("a::text").getall()
+        #exact_list = [ i for i in rough_film_list if i[0:7] != 'Episode' and i[0:8] != 'Show all' and i != 'completed' and i != 'post-production' and i != 'pre-production' and i != 'filming']
         actor_name = response.css("span.itemprop::text").get()
+        rough_film_list = response.css("div.filmo-row")
+        exact_list = [i.css("a::text").get() for i in rough_film_list if i.css("::attr(id)") and i.css("a")]
         
+
         for film in exact_list:
             yield {
                 "actor": actor_name,
